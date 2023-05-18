@@ -53,6 +53,3 @@ class FollowViewSet(mixins.CreateModelMixin,
 
     def get_queryset(self):
         return self.request.user.follower.all()
-
-    def perform_create(self, serializer):
-        return serializer.save(user=self.request.user)
