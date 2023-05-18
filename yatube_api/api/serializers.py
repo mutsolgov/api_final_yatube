@@ -1,11 +1,7 @@
 from rest_framework import serializers, validators
 from rest_framework.relations import SlugRelatedField
-from django.contrib.auth import get_user_model
 
-
-from posts.models import Comment, Post, Group, Follow
-
-User = get_user_model()
+from posts.models import Comment, Post, Group, Follow, User
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -20,13 +16,11 @@ class CommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
         read_only=True, slug_field='username'
     )
-    post = serializers.PrimaryKeyRelatedField(
-        source='post_id', read_only=True
-    )
 
     class Meta:
         fields = '__all__'
         model = Comment
+        read_only_fields = ('post',)
 
 
 class GroupSerializer(serializers.ModelSerializer):
